@@ -4,7 +4,7 @@ gum 权限系统的客户端
 ### API列表
 <details>
   <summary>1. 给角色增加一个api权限</summary>
-  ```
+  ```js
   const gum = new GUM(opt)
   const addPolicyResult = await gum.addPolicy('admin','/api/v1/health','GET')
   console.log(`addPolicyResult:${addPolicyResult}`)
