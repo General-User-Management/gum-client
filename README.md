@@ -32,3 +32,4 @@ console.log(`addPoliciesResult:${addPoliciesResult}`)
 - [ ] 链接参数有是否自动重连、最大重连次数等参数
 - [ ] 链接不上会有 error 事件
 - [ ] 测试是否能手动触发同步
+- [ ] 测试cron 触发同步
