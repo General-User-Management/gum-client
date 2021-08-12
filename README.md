@@ -25,6 +25,12 @@ const addPoliciesResult = await gum.addPolicies([
         ])
 console.log(`addPoliciesResult:${addPoliciesResult}`)
 ```
+3. 给用户赋予某个角色
+```
+const gum = new GUM(opt)
+const addRoleForUserResult = await gum.addRoleForUser('hyx','管理员')
+console.log(`addRoleForUserResult:${addRoleForUserResult}`)
+```
 
 #### TODO
 - [ ] 创建GUM类
