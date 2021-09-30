@@ -4,26 +4,33 @@
 gum 权限系统的客户端
 
 ### 快速开始
-#### 实例化
+#### 1. 实例化
 ```
 const GUM = require('gum-client')
-const gumClient = new GUM()
-gumClient.connect('gum-svc服务地址',{
-  healthPath:'/health',
-  healthProbe:{
-    period:60,
-    timeout:5
-  },
-  maxRedirects:5,
-  timeout:5,
-  auto_reconnect:true
-})
-gumClient.on('ready',() => {
-  console.log(`连接成功`)
-  gumClient.addPolicy("测试角色", "/api/v1/mock/status", "(GET)|(POST)")
-})
+
+async function run () {
+  const gumClient = new GUM()
+  gumClient.connect('http://192.168.4.193:3000', {
+    healthPath: '/health',
+    healthProbe: {
+      period: 60,
+      timeout: 5
+    },
+    maxRedirects: 5,
+    timeout: 5,
+    auto_reconnect: true
+  })
+
+  gumClient.on('ready',async () => {
+    console.log(`连接成功`)
+    const addPolicyResult = await gumClient.addPolicy("测试角色", "/api/v1/mock/status", "(GET)|(POST)")
+    console.log(JSON.stringify(addPolicyResult))
+  })
+}
+
+run()
 ```
-#### option 参数说明
+#### 2. option 参数说明
 *gumClient.connect(url,option)* 中的 `url/option` 参数说明如下
 参数 | 类型 | 是否必填 | 默认值 | 说明 
 ---|--- |--- |--- |---
@@ -36,6 +43,12 @@ option.healthProbe.timeout | Int | 否 | 5 | 1次检查的超时时间（秒）
 option.maxRedirects | Int | 否 | 5 | 最大重连次数
 option.timeout | Int | 否 | 5 | 请求超时时间（秒）
 option.auto_reconnect | boolean | 否 | true | 是否开启自动重连
+
+#### 3. 事件说明
+事件名称 | 参数说明 |  备注
+--- | --- |--- 
+ready | 无参数 | 连接成功后事件
+error | 无参数 | 错误事件
 
 ### API列表
 <details>
@@ -75,7 +88,5 @@ option.auto_reconnect | boolean | 否 | true | 是否开启自动重连
 </details>
 
 #### TODO
-- [ ] 创建GUM类
 - [ ] 增加监听机制器，断开会收到一个断开事件
 - [ ] 链接参数有是否自动重连、最大重连次数等参数
-- [ ] 链接不上会有 error 事件
