@@ -3,6 +3,40 @@
 ## gum-client
 gum 权限系统的客户端
 
+### 快速开始
+#### 实例化
+```
+const GUM = require('gum-client')
+const gumClient = new GUM()
+gumClient.connect('gum-svc服务地址',{
+  healthPath:'/health',
+  healthProbe:{
+    period:60,
+    timeout:5
+  },
+  maxRedirects:5,
+  timeout:5,
+  auto_reconnect:true
+})
+gumClient.on('ready',() => {
+  console.log(`连接成功`)
+  gumClient.addPolicy("测试角色", "/api/v1/mock/status", "(GET)|(POST)")
+})
+```
+#### option 参数说明
+*gumClient.connect(url,option)* 中的 `url/option` 参数说明如下
+参数 | 类型 | 是否必填 | 默认值 | 说明 
+---|--- |--- |--- |---
+url | String | 是 | - | gum-svc 服务 BaseUrl
+option | Object | 是 | - | 实例连接 option 选项
+option.healthPath | String | 否 | /health | 保持连接健康，检查心跳地址
+option.healthProbe | Object | 否 | - | 实例连接 option 选项
+option.healthProbe.period | Int | 否 | 60 | 心跳检查周期（秒）
+option.healthProbe.timeout | Int | 否 | 5 | 1次检查的超时时间（秒）
+option.maxRedirects | Int | 否 | 5 | 最大重连次数
+option.timeout | Int | 否 | 5 | 请求超时时间（秒）
+option.auto_reconnect | boolean | 否 | true | 是否开启自动重连
+
 ### API列表
 <details>
   <summary>1. 给角色增加一个api权限</summary>
